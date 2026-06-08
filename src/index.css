@@ -865,7 +865,7 @@ input, textarea {
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  max-width: 400px;
+  max-width: 440px;
   margin: 0 auto;
 }
 
@@ -937,7 +937,7 @@ input, textarea {
   }
 
   .about-orbit-container {
-    max-width: 300px;
+    max-width: 320px;
   }
 
   .about-stats {

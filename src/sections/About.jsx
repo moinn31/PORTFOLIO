@@ -33,12 +33,16 @@ const stats = [
 ];
 
 const orbitSkills = [
-  { name: 'React',     duration: '20s', deg: 0,   radius: 130 },
-  { name: 'Python',    duration: '25s', deg: 60,   radius: 130 },
-  { name: 'Java',      duration: '22s', deg: 120,  radius: 160 },
-  { name: 'SQL',       duration: '28s', deg: 180,  radius: 160 },
-  { name: 'Git',       duration: '15s', deg: 240,  radius: 190 },
-  { name: 'Analytics', duration: '35s', deg: 300,  radius: 190 },
+  { name: 'React',     duration: '20s', deg: 0,   radius: 132 },
+  { name: 'Python',    duration: '25s', deg: 36,  radius: 134 },
+  { name: 'Java',      duration: '22s', deg: 72,  radius: 162 },
+  { name: 'SQL',       duration: '28s', deg: 108, radius: 162 },
+  { name: 'Git',       duration: '15s', deg: 144, radius: 190 },
+  { name: 'Docker',    duration: '18s', deg: 180, radius: 192 },
+  { name: 'AWS',       duration: '30s', deg: 216, radius: 192 },
+  { name: 'Firebase',  duration: '26s', deg: 252, radius: 164 },
+  { name: 'YOLOv8',    duration: '34s', deg: 288, radius: 136 },
+  { name: 'Analytics', duration: '35s', deg: 324, radius: 136 },
 ];
 
 const About = () => {
