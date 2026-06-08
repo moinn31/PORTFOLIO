@@ -506,23 +506,36 @@ input, textarea {
 }
 
 .navbar-links a {
-  padding: 8px 16px;
-  font-size: 0.85rem;
-  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  font-weight: 500;
   color: var(--text-secondary);
-  border-radius: 8px;
-  transition: var(--transition-fast);
+  border-radius: 28px;
+  transition: all 180ms ease;
   position: relative;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
+  background: transparent;
 }
 
-.navbar-links a:hover {
-  color: var(--cyan);
-  background: var(--cyan-glow);
-}
-
+.navbar-links a:hover,
 .navbar-links a.active {
-  color: var(--cyan);
+  color: var(--text-primary);
+  background: linear-gradient(180deg, rgba(0,0,0,0.85), rgba(0,0,0,0.75));
+  box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 0 20px rgba(0,240,255,0.06);
+  transform: translateY(-2px);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.navbar-links a .nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--text-primary);
 }
 
 .navbar-mobile-toggle {
