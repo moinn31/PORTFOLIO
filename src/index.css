@@ -488,6 +488,31 @@ input, textarea {
   justify-content: space-between;
 }
 
+/* Sliding indicator for navbar */
+.navbar-container {
+  position: relative;
+}
+
+.nav-indicator {
+  position: absolute;
+  height: 40px;
+  bottom: 6px;
+  left: 0;
+  width: 0px;
+  background: linear-gradient(90deg, rgba(0,240,255,0.08), rgba(168,85,247,0.06));
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: transform 220ms cubic-bezier(0.2,0.8,0.2,1), width 220ms cubic-bezier(0.2,0.8,0.2,1), opacity 180ms ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.navbar-links li {
+  position: relative;
+  z-index: 2; /* place links above indicator */
+}
+
 .navbar-logo {
   font-family: var(--font-heading);
   font-size: 1.2rem;
@@ -608,6 +633,10 @@ input, textarea {
 
   .navbar-mobile-toggle {
     display: flex;
+  }
+
+  .nav-indicator {
+    display: none;
   }
 }
 
