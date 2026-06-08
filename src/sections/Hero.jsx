@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { HiArrowDown, HiEnvelope, HiDocumentArrowDown } from 'react-icons/hi2';
+import heroImage from '../assets/hero.png';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -117,7 +118,11 @@ const Hero = () => {
               <div className="hero-image-glow" />
               <div className="hero-image-ring" />
               <div className="hero-image">
-                <span className="initials">MJ</span>
+                <img
+                  src={heroImage}
+                  alt="Makrani Moinuddin"
+                  className="hero-profile-photo"
+                />
               </div>
             </div>
           </motion.div>
