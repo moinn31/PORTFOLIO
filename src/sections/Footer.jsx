@@ -30,7 +30,7 @@ function Footer() {
         </div>
 
         <p className="footer-text">
-          © 2025 Makrani Moinuddin. Crafted with passion &amp; code.
+          © 2026 Makrani Moinuddin. Crafted with passion &amp; code.
         </p>
       </div>
     </footer>

@@ -478,6 +478,7 @@ input, textarea {
   padding: 10px 0;
 }
 
+.navbar-container,
 .navbar-inner {
   max-width: var(--container-max);
   margin: 0 auto;
@@ -524,54 +525,58 @@ input, textarea {
   color: var(--cyan);
 }
 
-.navbar-toggle {
+.navbar-mobile-toggle {
   display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  padding: 4px;
-  z-index: 1001;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border-glass);
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  z-index: 1002;
+  transition: var(--transition-fast);
 }
 
-.navbar-toggle span {
-  width: 24px;
-  height: 2px;
-  background: var(--text-primary);
-  border-radius: 2px;
-  transition: var(--transition-smooth);
+.navbar-mobile-toggle svg {
+  font-size: 1.4rem;
 }
 
-.navbar-toggle.open span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.navbar-toggle.open span:nth-child(2) {
-  opacity: 0;
-}
-
-.navbar-toggle.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+.navbar-mobile-toggle:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow-cyan);
 }
 
 /* Mobile menu */
-.navbar-mobile {
+.mobile-menu-overlay {
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(5, 5, 16, 0.95);
   backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
   z-index: 999;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 24px;
+  padding: 100px 24px 40px;
 }
 
-.navbar-mobile.open {
+.mobile-menu-overlay.open {
   display: flex;
 }
 
-.navbar-mobile a {
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+
+.mobile-menu-links a {
   font-family: var(--font-heading);
   font-size: 1.2rem;
   letter-spacing: 3px;
@@ -579,7 +584,7 @@ input, textarea {
   transition: var(--transition-fast);
 }
 
-.navbar-mobile a:hover {
+.mobile-menu-links a:hover {
   color: var(--cyan);
 }
 
@@ -588,7 +593,7 @@ input, textarea {
     display: none;
   }
 
-  .navbar-toggle {
+  .navbar-mobile-toggle {
     display: flex;
   }
 }
@@ -602,6 +607,7 @@ input, textarea {
   align-items: center;
   position: relative;
   overflow: hidden;
+  padding-top: 90px;
 }
 
 .hero-content {
@@ -772,6 +778,10 @@ input, textarea {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 40px;
+  }
+
+  .hero {
+    padding-top: 110px;
   }
 
   .hero-text {

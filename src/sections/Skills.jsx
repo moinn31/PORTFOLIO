@@ -1,12 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 import {
   HiCommandLine,
   HiGlobeAlt,
   HiWrench,
   HiCircleStack,
   HiChartBar,
+  HiCloud,
+  HiServerStack,
+  HiCpuChip,
+  HiPhoto,
 } from 'react-icons/hi2';
 
 const skillCategories = [
@@ -39,6 +44,9 @@ const skillCategories = [
       { name: 'Git', percent: 80 },
       { name: 'VS Code', percent: 90 },
       { name: 'NetBeans', percent: 70 },
+      { name: 'Android Studio', percent: 68 },
+      { name: 'Docker', percent: 62 },
+      { name: 'Postman', percent: 75 },
     ],
   },
   {
@@ -46,6 +54,27 @@ const skillCategories = [
     icon: <HiCircleStack />,
     skills: [
       { name: 'MySQL', percent: 78 },
+      { name: 'PostgreSQL', percent: 74 },
+      { name: 'Supabase', percent: 72 },
+      { name: 'Firebase', percent: 76 },
+    ],
+  },
+  {
+    title: 'Cloud & Big Data',
+    icon: <HiCloud />,
+    skills: [
+      { name: 'AWS', percent: 70 },
+      { name: 'Hadoop', percent: 66 },
+      { name: 'Spark', percent: 68 },
+    ],
+  },
+  {
+    title: 'Computer Vision',
+    icon: <HiCpuChip />,
+    skills: [
+      { name: 'YOLOv8', percent: 78 },
+      { name: 'ArcFace', percent: 72 },
+      { name: 'OpenCV', percent: 80 },
     ],
   },
   {
@@ -144,6 +173,32 @@ const Skills = () => {
               ))}
             </motion.div>
           ))}
+        </motion.div>
+
+        <motion.div
+          className="contact-socials"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          style={{ marginTop: '2rem' }}
+        >
+          <a
+            href="https://www.linkedin.com/in/moin-makrani-9a1a50363"
+            className="contact-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaLinkedinIn />
+          </a>
+          <a
+            href="https://github.com/moinn31"
+            className="contact-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub />
+          </a>
         </motion.div>
       </div>
     </section>

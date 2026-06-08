@@ -27,9 +27,9 @@ const childVariants = {
 
 /* ── Data ── */
 const stats = [
-  { number: '5+', label: 'Projects Completed' },
+  { number: '7+', label: 'Projects Completed' },
   { number: '1', label: 'Internship' },
-  { number: '10+', label: 'Tech Skills' },
+  { number: '12+', label: 'Tech Skills' },
 ];
 
 const orbitSkills = [

@@ -10,6 +10,9 @@ import {
   HiPresentationChartBar,
   HiCircleStack,
   HiDocumentChartBar,
+  HiCloud,
+  HiServerStack,
+  HiCpuChip,
 } from 'react-icons/hi2';
 
 const metrics = [
@@ -27,6 +30,8 @@ const skills = [
   { name: 'Viz', percent: 70 },
   { name: 'Excel', percent: 80 },
   { name: 'Stats', percent: 74 },
+  { name: 'AWS', percent: 70 },
+  { name: 'Spark', percent: 68 },
 ];
 
 const toolChips = [
@@ -38,6 +43,12 @@ const toolChips = [
   { name: 'SQL', icon: HiCircleStack },
   { name: 'Excel', icon: HiDocumentChartBar },
   { name: 'Power BI', icon: HiPresentationChartBar },
+  { name: 'Supabase', icon: HiCircleStack },
+  { name: 'Firebase', icon: HiCloud },
+  { name: 'PostgreSQL', icon: HiServerStack },
+  { name: 'Docker', icon: HiCloud },
+  { name: 'YOLOv8', icon: HiCpuChip },
+  { name: 'ArcFace', icon: HiCpuChip },
 ];
 
 const containerVariants = {
