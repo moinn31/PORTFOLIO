@@ -1668,6 +1668,15 @@ input, textarea {
   align-self: flex-start;
 }
 
+.contact-status {
+  font-size: 0.85rem;
+  color: var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
 @media (max-width: 768px) {
   .contact-grid {
     grid-template-columns: 1fr;

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { HiEnvelope, HiPhone, HiMapPin, HiPaperAirplane } from 'react-icons/hi2'
@@ -28,9 +29,33 @@ function Contact() {
     triggerOnce: true,
     threshold: 0.1,
   })
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  })
+  const [status, setStatus] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    const name = formData.name.trim()
+    const email = formData.email.trim()
+    const message = formData.message.trim()
+
+    if (!name || !email || !message) {
+      setStatus('Please fill in all fields before sending.')
+      return
+    }
+
+    const subject = encodeURIComponent(`Portfolio message from ${name}`)
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+    )
+
+    window.location.href = `mailto:moinmak033@gmail.com?subject=${subject}&body=${body}`
+    setStatus('Opening your email app...')
+    setFormData({ name: '', email: '', message: '' })
   }
 
   return (
@@ -123,6 +148,9 @@ function Contact() {
                   name="name"
                   className="form-input"
                   placeholder="Your Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                  required
                 />
               </div>
 
@@ -132,6 +160,9 @@ function Contact() {
                   name="email"
                   className="form-input"
                   placeholder="Your Email"
+                  value={formData.email}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                  required
                 />
               </div>
 
@@ -140,8 +171,13 @@ function Contact() {
                   name="message"
                   className="form-textarea"
                   placeholder="Your Message"
+                  value={formData.message}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
+                  required
                 />
               </div>
+
+              {status && <div className="contact-status">{status}</div>}
 
               <div className="form-submit">
                 <button type="submit" className="btn btn-primary">
