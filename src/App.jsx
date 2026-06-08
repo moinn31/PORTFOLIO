@@ -11,6 +11,7 @@ import FloatingShapes from './components/FloatingShapes'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Skills from './sections/Skills'
+import Certificates from './sections/Certificates'
 import Experience from './sections/Experience'
 import Projects from './sections/Projects'
 import Analytics from './sections/Analytics'
@@ -48,6 +49,7 @@ function App() {
             <Hero />
             <About />
             <Skills />
+            <Certificates />
             <Experience />
             <Projects />
             <Analytics />
