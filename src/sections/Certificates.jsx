@@ -1,16 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { HiArrowTopRightOnSquare, HiShieldCheck } from 'react-icons/hi2';
-
-const certificates = [
-  {
-    title: 'LinkedIn Certifications',
-    issuer: 'LinkedIn Profile',
-    description:
-      'A public collection of your certificates on LinkedIn. Best for quick credibility if the certificate titles are not yet listed individually.',
-    link: 'https://www.linkedin.com/in/moin-makrani-9a1a50363/details/certifications/',
-  },
-];
+import { linkedinCertificates } from '../data/profileData';
 
 const containerVariants = {
   hidden: {},
@@ -61,7 +52,7 @@ function Certificates() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
         >
-          {certificates.map((certificate) => (
+          {linkedinCertificates.map((certificate) => (
             <motion.div
               key={certificate.title}
               className="glass-card certificate-card"

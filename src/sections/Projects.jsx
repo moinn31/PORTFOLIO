@@ -1,75 +1,24 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import VanillaTilt from 'vanilla-tilt';
 import {
-  HiRocketLaunch,
-  HiCpuChip,
-  HiHeart,
-  HiShieldCheck,
-  HiDocumentText,
   HiCodeBracket,
   HiArrowTopRightOnSquare,
+  HiExclamationTriangle,
 } from 'react-icons/hi2';
+import { githubProjectOverrides, githubUsername } from '../data/profileData';
 
-const projects = [
-  {
-    title: 'KAFE-01',
-    desc: 'A modern cafe management web app with a polished interface and full-stack architecture.',
-    tags: ['React.js', 'Node.js', 'MongoDB', 'Express'],
-    github: 'https://github.com/moinn31/KAFE-01',
-    live: 'https://kafe-01.vercel.app/',
-    icon: HiRocketLaunch,
-  },
-  {
-    title: 'Attendance Tracking System',
-    desc: 'An attendance system built to streamline tracking and management for classroom use.',
-    tags: ['Python', 'OpenCV', 'Machine Learning', 'Flask'],
-    github: 'https://github.com/moinn31/ATTENDANCE-TRACKING-SYSTEM',
-    live: null,
-    icon: HiCpuChip,
-  },
-  {
-    title: 'Pet Event Management',
-    desc: 'A Java Swing desktop application for organizing pet events, registrations, and scheduling.',
-    tags: ['Java', 'MySQL', 'JDBC', 'Swing'],
-    github: 'https://github.com/moinn31/PetEventManagement',
-    live: null,
-    icon: HiHeart,
-  },
-  {
-    title: 'SecureVoteChain',
-    desc: 'Blockchain-based secure e-voting system ensuring transparency and tamper-proof elections.',
-    tags: ['Blockchain', 'Solidity', 'React', 'Web3'],
-    github: 'https://github.com/moinn31/SecureVoteChain',
-    live: null,
-    icon: HiShieldCheck,
-  },
-  {
-    title: 'Vegetable Variety Classifier AI',
-    desc: 'A machine learning project for classifying vegetable varieties from images with AI workflows.',
-    tags: ['Python', 'Machine Learning', 'Image Classification', 'AI'],
-    github: 'https://github.com/moinn31/Vegetable-Variety-Classifier-AI',
-    live: null,
-    icon: HiDocumentText,
-  },
-  {
-    title: 'Simple HTML Page',
-    desc: 'A lightweight static website focused on clean structure, responsive layout, and fast delivery.',
-    tags: ['HTML', 'CSS', 'Responsive Design'],
-    github: 'https://github.com/moinn31/simple-html-page',
-    live: null,
-    icon: HiCodeBracket,
-  },
-  {
-    title: 'Portfolio Website',
-    desc: 'This portfolio itself, designed to present projects, skills, and contact details in one place.',
-    tags: ['React', 'Vite', 'Framer Motion'],
-    github: 'https://github.com/moinn31/PORTFOLIO',
-    live: null,
-    icon: HiRocketLaunch,
-  },
-];
+const fallbackProjects = Object.entries(githubProjectOverrides).map(([repoName, override]) => ({
+  title: repoName.replace(/-/g, ' '),
+  repoName,
+  desc: override.description,
+  tags: override.tags,
+  github: `https://github.com/${githubUsername}/${repoName}`,
+  live: override.live || null,
+  language: override.tags[0] || 'GitHub',
+  isFallback: true,
+}));
 
 const containerVariants = {
   hidden: {},
@@ -92,30 +41,97 @@ const cardVariants = {
 const Projects = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const tiltRefs = useRef([]);
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    if (inView) {
-      tiltRefs.current.forEach((el) => {
-        if (el) {
-          VanillaTilt.init(el, {
-            max: 8,
-            speed: 300,
-            glare: true,
-            'max-glare': 0.15,
-            scale: 1.02,
-          });
+    const controller = new AbortController();
+
+    const loadProjects = async () => {
+      try {
+        setLoading(true);
+        setError('');
+
+        const response = await fetch(
+          `https://api.github.com/users/${githubUsername}/repos?per_page=100&sort=pushed`,
+          {
+            signal: controller.signal,
+            headers: {
+              Accept: 'application/vnd.github+json',
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error('Unable to load GitHub projects right now.')
         }
-      });
+
+        const repos = await response.json();
+        const mappedProjects = repos
+          .filter((repo) => !repo.fork && !repo.archived)
+          .map((repo) => {
+            const override = githubProjectOverrides[repo.name] || {}
+            const tags = override.tags || [repo.language || 'GitHub']
+
+            return {
+              title: repo.name.replace(/-/g, ' '),
+              repoName: repo.name,
+              desc: override.description || repo.description || 'GitHub repository automatically pulled into the portfolio.',
+              tags: [...tags.slice(0, 3), repo.language].filter(Boolean).slice(0, 4),
+              github: repo.html_url,
+              live: override.live || repo.homepage || null,
+              language: repo.language || 'GitHub',
+              stars: repo.stargazers_count,
+              updatedAt: repo.pushed_at,
+              isFallback: false,
+            }
+          })
+          .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+
+        setProjects(mappedProjects.length ? mappedProjects : fallbackProjects)
+      } catch (fetchError) {
+        if (fetchError.name !== 'AbortError') {
+          setProjects(fallbackProjects)
+          setError('Live GitHub sync is unavailable right now, so the portfolio is showing your curated project list.')
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoading(false)
+        }
+      }
     }
+
+    loadProjects()
+
+    return () => controller.abort()
+  }, [])
+
+  useEffect(() => {
+    if (!inView || projects.length === 0) {
+      return undefined
+    }
+
+    tiltRefs.current.forEach((el) => {
+      if (el) {
+        VanillaTilt.init(el, {
+          max: 8,
+          speed: 300,
+          glare: true,
+          'max-glare': 0.15,
+          scale: 1.02,
+        })
+      }
+    })
 
     return () => {
       tiltRefs.current.forEach((el) => {
         if (el && el.vanillaTilt) {
-          el.vanillaTilt.destroy();
+          el.vanillaTilt.destroy()
         }
-      });
-    };
-  }, [inView]);
+      })
+    }
+  }, [inView, projects]);
 
   return (
     <section id="projects" className="section">
@@ -134,8 +150,17 @@ const Projects = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          Things I have built
+          Things I have built. New GitHub repositories appear here automatically.
         </motion.p>
+
+        {error && (
+          <div className="portfolio-sync-note">
+            <HiExclamationTriangle />
+            <span>{error}</span>
+          </div>
+        )}
+
+        {loading && <div className="portfolio-sync-loading">Syncing public GitHub repositories...</div>}
 
         <motion.div
           className="projects-grid"
@@ -145,10 +170,10 @@ const Projects = () => {
           animate={inView ? 'visible' : 'hidden'}
         >
           {projects.map((project, index) => {
-            const Icon = project.icon;
+            const Icon = HiCodeBracket;
             return (
               <motion.div
-                key={project.title}
+                key={project.repoName || project.title}
                 variants={cardVariants}
                 className="project-card"
                 ref={(el) => (tiltRefs.current[index] = el)}

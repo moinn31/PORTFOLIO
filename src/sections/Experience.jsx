@@ -1,19 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { HiCheck } from 'react-icons/hi2';
-
-const experienceData = [
-  {
-    date: 'MAY 2025 — JUL 2025',
-    title: 'Digital & Analytics Intern',
-    company: 'CEAT Limited',
-    tasks: [
-      'Claim Report Digitization — Transformed manual claim processes into streamlined digital workflows',
-      'Workflow Automation — Automated repetitive tasks to improve operational efficiency',
-      'Dashboard Development & Reporting — Built interactive dashboards for data-driven decision making',
-    ],
-  },
-];
+import { linkedinExperience } from '../data/profileData';
 
 const timelineVariants = {
   hidden: { opacity: 0, x: -60 },
@@ -51,7 +39,7 @@ const Experience = () => {
         </motion.p>
 
         <div className="timeline">
-          {experienceData.map((exp, idx) => (
+          {linkedinExperience.map((exp, idx) => (
             <motion.div
               className="timeline-item"
               key={idx}
